@@ -15,3 +15,17 @@ pub fn factorial(input: i64) -> i64 {
     }
     f
 }
+
+
+// This entire test module will be excluded from the normal builds. Tests don't actually
+// _need_ to be inside of a test module like this, but it does make it easier to keep things
+// clean and organized.
+#[cfg(test)]
+mod test {
+    use super::factorial;
+
+    #[test]
+    fn factorial_of_5_is_120() {
+        assert_eq!(120, factorial(5));
+    }
+}
