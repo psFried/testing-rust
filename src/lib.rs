@@ -18,6 +18,15 @@ pub fn factorial(input: i64) -> i64 {
     f
 }
 
+/// Returns the factorial of a number that's passed as a byte slice
+/// This is a pretty contrived example, but it's meant to be used as
+/// an example of where fuzzing would be useful
+pub fn factorial_of_str(input: &[u8]) -> Result<i64, &'static str> {
+  let string_input = std::str::from_utf8(input).map_err(|_| "input is not valid utf8")?;
+  let int = string_input.parse().map_err(|_| "input is not a valid integer")?;
+  Ok(factorial(int))
+}
+
 
 // This entire test module will be excluded from the normal builds. Tests don't actually
 // _need_ to be inside of a test module like this, but it does make it easier to keep things

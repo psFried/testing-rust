@@ -24,5 +24,5 @@ fn prints_an_error_when_argument_is_not_a_number() {
         .assert()       // assert() function provided by the `OutputAssertExt` trait
             .failure()
             .code(1)
-            .stdout("must supply an integer argument\n");
+            .stdout("input is not a valid integer\n");
 }
