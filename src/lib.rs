@@ -11,9 +11,9 @@ extern crate quickcheck_macros;
 /// assert_eq!(24, factorial(4));
 /// ```
 pub fn factorial(input: i64) -> i64 {
-    let mut f = 1;
+    let mut f: i64 = 1;
     for i in 1..input {
-        f += i * f;
+        f = f.saturating_add(f.saturating_mul(i));
     }
     f
 }
@@ -39,5 +39,12 @@ mod test {
     #[quickcheck]
     fn factorial_does_not_panic(input: i64) {
         factorial(input);
+    }
+
+    #[test]
+    fn factorial_returns_max_value_for_any_input_over_20() {
+        assert_eq!(i64::max_value(), factorial(21));
+        assert_eq!(i64::max_value(), factorial(42));
+        assert_eq!(i64::max_value(), factorial(900));
     }
 }
