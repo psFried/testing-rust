@@ -1,4 +1,6 @@
-
+#[cfg(test)]
+#[macro_use(quickcheck)]
+extern crate quickcheck_macros;
 
 /// Computes the factorial of the input!
 ///
@@ -27,5 +29,15 @@ mod test {
     #[test]
     fn factorial_of_5_is_120() {
         assert_eq!(120, factorial(5));
+    }
+
+    // Uses the quickcheck crate for property-based tests
+    // https://github.com/BurntSushi/quickcheck
+    //
+    // This function will be automatically called with a variety of inputs. Since this is a unit function,
+    // the test will pass as long as it doesn't panic. You could also return a `Testable` value like a `bool`
+    #[quickcheck]
+    fn factorial_does_not_panic(input: i64) {
+        factorial(input);
     }
 }
